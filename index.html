@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SusanAI Full Stack Platform</title>
+    <!-- Tailwind CSS for modern, responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* General styling for the page */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            background-image: url('https://placehold.co/1920x1080/000000/FFFFFF?text=Background+Image'); /* Placeholder background image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- Dark Mode Overlay --- */
+        /* Updated the dark overlay to be less opaque, making the background image more visible */
+        .dark-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.45); /* Adjusted from a darker value to 0.45 for moderate darkness */
+            z-index: 1;
+        }
+
+        /* Container for all content */
+        .content-container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* --- Welcome Message Styling --- */
+        #welcome-message {
+            font-size: 3rem;
+            font-weight: 700;
+            opacity: 1;
+            transition: opacity 1s ease-in-out; /* Smooth fade-out transition */
+            margin-bottom: 2rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            z-index: 10;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Class to trigger the fade-out effect */
+        #welcome-message.fade-out {
+            opacity: 0;
+        }
+
+        /* --- SusanAI Logo & User Name Styling --- */
+        .susanai-logo-wrapper {
+            display: flex;
+            align-items: baseline;
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        }
+
+        #susan-logo {
+            font-size: 8rem;
+            font-weight: 900;
+            color: #4ade80; /* A bright green color for the logo */
+            transition: font-size 1s ease-in-out, opacity 1s ease-in-out;
+            text-shadow: 0 0 15px rgba(74, 222, 128, 0.7);
+        }
+
+        /* Class to trigger the shrinking and fading effect on the logo */
+        #susan-logo.shrink-and-fade {
+            font-size: 5.2rem; /* 65% of 8rem */
+            opacity: 0.5;
+        }
+
+        /* User name styling - initially hidden */
+        #user-name {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-left: 1rem;
+            opacity: 0;
+            transition: opacity 1s ease-in-out; /* Smooth fade-in transition */
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #welcome-message {
+                font-size: 2.5rem;
+            }
+
+            #susan-logo {
+                font-size: 4rem;
+            }
+
+            #susan-logo.shrink-and-fade {
+                font-size: 2.6rem;
+            }
+
+            #user-name {
+                font-size: 1.5rem;
+                margin-left: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dark overlay with moderate transparency -->
+    <div class="dark-overlay"></div>
+
+    <!-- Main content container -->
+    <div class="content-container">
+
+        <!-- Welcome message that will fade out -->
+        <div id="welcome-message"></div>
+
+        <!-- SusanAI logo and user name wrapper -->
+        <div class="susanai-logo-wrapper">
+            <span id="susan-logo">SusanAI</span>
+            <span id="user-name"></span>
+        </div>
+
+    </div>
+
+    <script>
+        // --- JavaScript for handling the welcome message and logo animation ---
+
+        // A mock variable to simulate user login status
+        const isLoggedIn = true; // Set to true to see a user name, false for 'Trial mode user'
+        const userName = "เจนจิรา"; // Your user's name
+
+        const welcomeMessageElement = document.getElementById('welcome-message');
+        const susanLogoElement = document.getElementById('susan-logo');
+        const userNameElement = document.getElementById('user-name');
+
+        // Set the initial welcome message based on login status
+        if (isLoggedIn) {
+            welcomeMessageElement.textContent = `ยินดีต้อนรับ คุณ ${userName} สู่แพลตฟอร์ม SusanAI`;
+        } else {
+            welcomeMessageElement.textContent = `ยินดีต้อนรับสู่แพลตฟอร์ม SusanAI`;
+        }
+
+        // Timer for the welcome message and logo animations (15 seconds)
+        const delay = 15000; // 15 seconds in milliseconds
+
+        // After 15 seconds, fade out the welcome message and start the logo animation
+        setTimeout(() => {
+            // Step 1: Fade out the welcome message
+            welcomeMessageElement.classList.add('fade-out');
+
+            // Step 2: Shrink and fade the SusanAI logo
+            susanLogoElement.classList.add('shrink-and-fade');
+
+            // Step 3: Set and fade in the user name
+            if (isLoggedIn) {
+                userNameElement.textContent = `คุณ ${userName}`;
+            } else {
+                userNameElement.textContent = `ผู้ใช้โหมดทดลอง`;
+            }
+            userNameElement.style.opacity = 1;
+
+        }, delay);
+    </script>
+
+</body>
+</html>
